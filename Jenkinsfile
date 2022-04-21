@@ -12,12 +12,28 @@ pipeline {
 			
 		'''
             }
+            post {
+                success {
+                        archiveArtifacts artifacts: 'java-app/target/*.jar', fingerprint: true
+                }
+                failure {
+                        error "Build step failed, halting pipeline"
+                }
+            }
         }
         stage('Test') {
             steps {
             	sh '''
 			./jenkins/test/test.sh mvn -Denforcer.skip=true test
 		'''
+            }
+            post {
+                 always {
+                        junit 'java-app/target/surefie-reports/*.xml'
+                 }
+                 failure {
+                        error "Test failed! Halting pipeline"
+                 }
             }            
         }
         stage('Push') {
