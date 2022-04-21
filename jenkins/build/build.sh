@@ -9,4 +9,4 @@ echo "================"
 
 cd jenkins/build/ && docker-compose -f docker-compose-build.yml build --no-cache
 
-echo ls -l /var/jenkins_home/pipeline-docker-maven/java-app/
+ls -l /var/jenkins_home/pipeline-docker-maven/java-app/
