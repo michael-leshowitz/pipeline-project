@@ -29,7 +29,7 @@ pipeline {
             }
             post {
                  always {
-                        junit 'java-app/target/surefie-reports/*.xml'
+                        junit 'java-app/target/surefire-reports/*.xml'
                  }
                  failure {
                         error "Test failed! Halting pipeline"
