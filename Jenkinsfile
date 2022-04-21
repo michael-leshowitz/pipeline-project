@@ -15,11 +15,13 @@ pipeline {
             post {
                 success {
                         archiveArtifacts artifacts: 'java-app/target/*.jar', fingerprint: true
-		sh './jenkins/reset-permission/reset.sh'
 		}
                 failure {
                         error "Build step failed, halting pipeline"
                 }
+		always {
+			sh './jenkins/reset-permission/reset.sh'
+		}
             }
         }
         stage('Test') {
