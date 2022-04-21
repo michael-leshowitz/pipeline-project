@@ -43,9 +43,11 @@ pipeline {
         stage('Push') {
             steps {
                 sh './jenkins/push/push.sh'
-            }            
-             always {
+            }
+            post {            
+                 always {
                         sh './jenkins/reset-permission/reset.sh'
+                 }
             }
 
         }
@@ -53,8 +55,10 @@ pipeline {
             steps {
                 sh './jenkins/deploy/deploy.sh'
             }
-            always {
-                sh './jenkins/reset-permission/reset.sh'
+            post {
+                always {
+                         sh './jenkins/reset-permission/reset.sh'
+                 }
             }
 
         }
