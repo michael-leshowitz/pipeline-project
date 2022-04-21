@@ -5,4 +5,5 @@ export TAG=$(sed -n '2p' /tmp/.auth)
 export PASS=$(sed -n '3p' /tmp/.auth)
 
 docker login -u mleshowitz -p $PASS
+cd ~/maven && docker-compose up -d
 
