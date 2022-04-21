@@ -33,6 +33,7 @@ pipeline {
             post {
                  always {
                         junit 'java-app/target/surefire-reports/*.xml'
+			sh '.jenkins/reset-permission/reset.sh'
                  }
                  failure {
                         error "Test failed! Halting pipeline"
@@ -43,11 +44,19 @@ pipeline {
             steps {
                 sh './jenkins/push/push.sh'
             }            
+             always {
+                        sh './jenkins/reset-permission/reset.sh'
+            }
+
         }
         stage('Depoly') {
             steps {
                 sh './jenkins/deploy/deploy.sh'
             }
+            always {
+                sh './jenkins/reset-permission/reset.sh'
+            }
+
         }
     }
 }
