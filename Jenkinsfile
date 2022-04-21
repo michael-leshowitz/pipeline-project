@@ -17,6 +17,7 @@ pipeline {
                         archiveArtifacts artifacts: 'java-app/target/*.jar', fingerprint: true
 		}
                 failure {
+                        updateGitlabCommitStatus name: 'Build', state: 'failed'
                         error "Build step failed, halting pipeline"
                 }
 		always {
@@ -36,6 +37,7 @@ pipeline {
 			sh './jenkins/reset-permission/reset.sh'
                  }
                  failure {
+                        updateGitlabCommitStatus name: 'Test', state: 'failed'
                         error "Test failed! Halting pipeline"
                  }
             }            
@@ -57,9 +59,14 @@ pipeline {
             }
             post {
                 always {
-		  	 updateGitlabCommitStatus name: 'Deploy', state: 'success'
                          sh './jenkins/reset-permission/reset.sh'
                  }
+                success {
+                         updateGitlabCommitStatus name: 'Deploy', state: 'success'
+                }
+                failure {
+                          updateGitlabCommitStatus name: 'Deploy', state: 'failed'
+                }
             }
 
         }
