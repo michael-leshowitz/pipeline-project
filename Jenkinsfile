@@ -57,6 +57,7 @@ pipeline {
             }
             post {
                 always {
+		  	 updateGitlabCommitStatus name: 'Deploy', state: 'success'
                          sh './jenkins/reset-permission/reset.sh'
                  }
             }
